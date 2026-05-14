@@ -1,0 +1,6 @@
+{
+  "project": "Study Research Agent",
+  "tools": ["file_reader", "text_search", "calculator"],
+  "deployment": "local command-line tool",
+  "tests": 13
+}
