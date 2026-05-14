@@ -19,6 +19,7 @@ class TextSearchTool:
         "how",
         "in",
         "is",
+        "not",
         "of",
         "on",
         "or",

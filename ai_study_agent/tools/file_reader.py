@@ -60,9 +60,12 @@ class FileReaderTool:
         index = 1
         while start < len(normalized):
             end = min(start + chunk_size, len(normalized))
-            boundary = normalized.rfind(" ", start, end)
-            if boundary <= start:
+            if end == len(normalized):
                 boundary = end
+            else:
+                boundary = normalized.rfind(" ", start, end)
+                if boundary <= start:
+                    boundary = end
             chunk = normalized[start:boundary].strip()
             if chunk:
                 chunks.append(DocumentChunk(source=source, index=index, text=chunk))
