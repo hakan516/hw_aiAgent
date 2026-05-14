@@ -2,7 +2,7 @@
 
 Study Research Agent is a Python command-line assistant that answers user questions by calling tools during execution. It can read local documents, convert structured data into text, search for relevant evidence, safely evaluate arithmetic expressions, and return a grounded response.
 
-The project is designed for a controlled deployment scenario: it runs locally, has no required network dependency, includes tests, and documents how data moves between components.
+The project is designed for a controlled deployment scenario: it runs locally by default, has no required network dependency, includes tests, and documents how data moves between components. It also supports optional OpenAI API synthesis when the user enables AI mode.
 
 ## Features
 
@@ -11,6 +11,7 @@ The project is designed for a controlled deployment scenario: it runs locally, h
   - `FileReaderTool` reads `.txt`, `.md`, `.csv`, and `.json`.
   - `TextSearchTool` ranks document chunks by query relevance.
   - `CalculatorTool` evaluates arithmetic expressions through a safe AST parser.
+  - `OpenAISynthesizerTool` optionally uses the OpenAI Responses API for final answer synthesis.
 - CLI input and text or JSON output.
 - Unit tests for tools, validation, errors, and the full workflow.
 - Deployment notes and staged development journal.
@@ -47,7 +48,19 @@ python -m venv .venv
 python -m pip install -e .
 ```
 
-There are no required runtime dependencies. `requirements.txt` records this and notes that `pytest` is optional for development.
+There are no required runtime dependencies for offline mode. For full OpenAI API mode, install the dependency list:
+
+```bash
+python -m pip install -r requirements.txt
+```
+
+If the project is installed as a package, you can also install the optional AI dependency group:
+
+```bash
+python -m pip install -e ".[ai]"
+```
+
+`requirements.txt` records optional packages for AI mode and development.
 
 ## Usage
 
@@ -73,6 +86,19 @@ Return JSON output:
 
 ```bash
 python main.py "What validates workflow?" --file notes.md --json
+```
+
+Use real OpenAI API synthesis:
+
+```bash
+$env:OPENAI_API_KEY="your_api_key_here"
+python main.py "Which tool ranks evidence?" --file examples/study_notes.md --ai
+```
+
+Optional model override:
+
+```bash
+$env:OPENAI_MODEL="gpt-5"
 ```
 
 After editable installation, the console command is also available:
@@ -104,7 +130,7 @@ The system accepts user text, optional arithmetic expressions, and optional loca
 - CSV rows are converted into readable key-value text.
 - Long text is split into numbered chunks while preserving source file information.
 
-The agent then passes chunks to the search tool, receives ranked evidence, and formats the final answer with evidence references.
+The agent then passes chunks to the search tool, receives ranked evidence, and formats the final answer with evidence references. If `--ai` is enabled, the OpenAI synthesizer rewrites the final answer using the local tool evidence.
 
 ## Deployment Strategy
 

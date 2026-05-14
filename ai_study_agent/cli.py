@@ -14,6 +14,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("-f", "--file", help="Path to a .txt, .md, .csv, or .json file.")
     parser.add_argument("-c", "--calculate", help="Arithmetic expression to evaluate.")
     parser.add_argument("--summary", action="store_true", help="Summarize the provided file.")
+    parser.add_argument("--ai", action="store_true", help="Use OpenAI API synthesis after local tools run.")
     parser.add_argument("--json", action="store_true", help="Print machine-readable JSON output.")
     return parser
 
@@ -21,7 +22,7 @@ def build_parser() -> argparse.ArgumentParser:
 def main(argv: Sequence[str] | None = None) -> int:
     parser = build_parser()
     args = parser.parse_args(argv)
-    agent = StudyResearchAgent()
+    agent = StudyResearchAgent(use_ai=args.ai)
 
     try:
         if args.summary:

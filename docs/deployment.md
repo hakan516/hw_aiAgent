@@ -8,7 +8,8 @@ The first deployment target is a local command-line tool. This keeps user files 
 
 - Python 3.10 or newer.
 - Git for cloning and version control.
-- No required runtime packages.
+- No required runtime packages for offline mode.
+- Optional AI mode package: `openai`.
 - Optional: `pytest` if the developer prefers pytest over the standard `unittest` runner.
 
 ## Setup
@@ -19,6 +20,13 @@ cd hw_aiAgent
 python -m venv .venv
 .venv\Scripts\activate
 python -m pip install -e .
+```
+
+For OpenAI API synthesis:
+
+```bash
+python -m pip install -e ".[ai]"
+$env:OPENAI_API_KEY="your_api_key_here"
 ```
 
 ## Launch
@@ -35,7 +43,12 @@ study-agent "Which tool is used for evidence?" --file docs/report.md
 
 ## Configuration
 
-No environment variables are required. The system is intentionally offline-friendly and deterministic for easier testing.
+No environment variables are required for offline mode. The system is intentionally offline-friendly and deterministic for easier testing.
+
+Optional AI configuration:
+
+- `OPENAI_API_KEY`: required only when using `--ai`.
+- `OPENAI_MODEL`: optional model override. Default: `gpt-5`.
 
 ## Verification Before Release
 

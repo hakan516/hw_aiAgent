@@ -33,3 +33,20 @@ python main.py "Calculate final score" --calculate "80 + 15 / 3"
 ```
 
 Expected behavior: the calculator returns `85.0`.
+
+## Scenario 5: Optional OpenAI API Synthesis
+
+Install the optional dependency and set an API key:
+
+```bash
+python -m pip install -e ".[ai]"
+$env:OPENAI_API_KEY="your_api_key_here"
+```
+
+Run:
+
+```bash
+python main.py "Which tool ranks evidence?" --file examples/study_notes.md --ai
+```
+
+Expected behavior: the local tools read and search the file first, then the OpenAI synthesizer writes a cleaner final answer from the retrieved evidence.

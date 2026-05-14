@@ -1,5 +1,5 @@
 from ai_study_agent.models import AgentResponse, DocumentChunk
-from ai_study_agent.tools import CalculatorTool, FileReaderTool, TextSearchTool
+from ai_study_agent.tools import CalculatorTool, FileReaderTool, OpenAISynthesizerTool, TextSearchTool
 
 
 class StudyResearchAgent:
@@ -10,10 +10,14 @@ class StudyResearchAgent:
         file_reader: FileReaderTool | None = None,
         search: TextSearchTool | None = None,
         calculator: CalculatorTool | None = None,
+        synthesizer: OpenAISynthesizerTool | None = None,
+        use_ai: bool = False,
     ) -> None:
         self.file_reader = file_reader or FileReaderTool()
         self.search = search or TextSearchTool()
         self.calculator = calculator or CalculatorTool()
+        self.synthesizer = synthesizer or OpenAISynthesizerTool()
+        self.use_ai = use_ai
 
     def answer(
         self,
@@ -52,9 +56,18 @@ class StudyResearchAgent:
             else:
                 answer_parts.append("No result could be produced from the provided input.")
 
+        final_answer = "\n".join(answer_parts)
+        if self.use_ai:
+            ai_result = self.synthesizer.run(request, final_answer, evidence, warnings)
+            tools_used.append(ai_result.tool_name)
+            if ai_result.success:
+                final_answer = ai_result.data
+            else:
+                warnings.append(f"AI synthesis skipped: {ai_result.message}")
+
         return AgentResponse(
             request=request,
-            answer="\n".join(answer_parts),
+            answer=final_answer,
             tools_used=tools_used,
             evidence=evidence,
             warnings=warnings,
@@ -71,11 +84,23 @@ class StudyResearchAgent:
             )
 
         summary = self._summarize_chunks(chunks)
+        tools_used = [self.file_reader.name]
+        evidence = [self._format_evidence(chunk) for chunk in chunks[:3]]
+        warnings: list[str] = []
+        if self.use_ai:
+            ai_result = self.synthesizer.run(f"Summarize {file_path}", summary, evidence, warnings)
+            tools_used.append(ai_result.tool_name)
+            if ai_result.success:
+                summary = ai_result.data
+            else:
+                warnings.append(f"AI synthesis skipped: {ai_result.message}")
+
         return AgentResponse(
             request=f"Summarize {file_path}",
             answer=summary,
-            tools_used=[self.file_reader.name],
-            evidence=[self._format_evidence(chunk) for chunk in chunks[:3]],
+            tools_used=tools_used,
+            evidence=evidence,
+            warnings=warnings,
         )
 
     def _load_chunks(
