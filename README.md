@@ -25,8 +25,11 @@ The project is designed for a controlled deployment scenario: it runs locally, h
 │   ├── models.py
 │   └── tools/
 ├── docs/
+│   ├── architecture.md
 │   ├── deployment.md
+│   ├── manual_demo.md
 │   └── report.md
+├── examples/
 ├── tests/
 ├── main.py
 ├── pyproject.toml
@@ -87,6 +90,10 @@ python -m unittest discover -s tests -v
 ```
 
 The tests cover calculator behavior, file conversion, text search, input validation, error handling, CLI JSON output, and the full agent workflow.
+
+## Manual Demo
+
+Sample files are included in `examples/`. Additional demo commands and expected behavior are documented in `docs/manual_demo.md`.
 
 ## Data Conversion
 
