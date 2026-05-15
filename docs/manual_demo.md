@@ -52,7 +52,13 @@ OPENAI_MODEL=gpt-5
 Run:
 
 ```bash
-python main.py "Which tool ranks evidence?" --file examples/study_notes.md --ai
+python main.py "Which tool ranks evidence?" --file examples/study_notes.md
 ```
 
 Expected behavior: the local tools read and search the file first, then the OpenAI synthesizer writes a cleaner final answer from the retrieved evidence.
+
+To force the deterministic offline version:
+
+```bash
+python main.py "Which tool ranks evidence?" --file examples/study_notes.md --offline
+```

@@ -48,7 +48,7 @@ No environment variables are required for offline mode. The system is intentiona
 
 Optional AI configuration:
 
-- `OPENAI_API_KEY`: required only when using `--ai`.
+- `OPENAI_API_KEY`: enables OpenAI API synthesis when present.
 - `OPENAI_MODEL`: optional model override. Default: `gpt-5`.
 
 These values can be placed in a local `.env` file:
@@ -57,6 +57,8 @@ These values can be placed in a local `.env` file:
 OPENAI_API_KEY=your_api_key_here
 OPENAI_MODEL=gpt-5
 ```
+
+When `OPENAI_API_KEY` exists, API synthesis is used automatically. Add `--offline` to any command to force local-only behavior.
 
 ## Verification Before Release
 

@@ -2,7 +2,7 @@
 
 Study Research Agent is a Python command-line assistant that answers user questions by calling tools during execution. It can read local documents, convert structured data into text, search for relevant evidence, safely evaluate arithmetic expressions, and return a grounded response.
 
-The project is designed for a controlled deployment scenario: it runs locally by default, has no required network dependency, includes tests, and documents how data moves between components. It also supports optional OpenAI API synthesis when the user enables AI mode.
+The project is designed for a controlled deployment scenario: it runs locally without network access when no API key is configured, includes tests, and documents how data moves between components. When `OPENAI_API_KEY` is present in `.env` or the environment, the assistant automatically uses OpenAI API synthesis after local tools run.
 
 ## Features
 
@@ -89,13 +89,7 @@ Return JSON output:
 python main.py "What validates workflow?" --file notes.md --json
 ```
 
-Use real OpenAI API synthesis:
-
-```bash
-python main.py "Which tool ranks evidence?" --file examples/study_notes.md --ai
-```
-
-Create a local `.env` file first:
+Use real OpenAI API synthesis by creating a local `.env` file:
 
 ```text
 OPENAI_API_KEY=your_api_key_here
@@ -103,6 +97,18 @@ OPENAI_MODEL=gpt-5
 ```
 
 `.env` is ignored by Git. Use `.env.example` as the template.
+
+Then run the normal command. The agent will use AI automatically:
+
+```bash
+python main.py "Which tool ranks evidence?" --file examples/study_notes.md
+```
+
+Force offline/local mode even when `.env` has a key:
+
+```bash
+python main.py "Which tool ranks evidence?" --file examples/study_notes.md --offline
+```
 
 After editable installation, the console command is also available:
 
@@ -133,7 +139,7 @@ The system accepts user text, optional arithmetic expressions, and optional loca
 - CSV rows are converted into readable key-value text.
 - Long text is split into numbered chunks while preserving source file information.
 
-The agent then passes chunks to the search tool, receives ranked evidence, and formats the final answer with evidence references. If `--ai` is enabled, the OpenAI synthesizer rewrites the final answer using the local tool evidence.
+The agent then passes chunks to the search tool, receives ranked evidence, and formats the final answer with evidence references. If `OPENAI_API_KEY` is configured, the OpenAI synthesizer rewrites the final answer using the local tool evidence. Use `--offline` to skip API synthesis.
 
 ## Deployment Strategy
 

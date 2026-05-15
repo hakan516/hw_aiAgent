@@ -1,4 +1,5 @@
 import json
+import os
 import tempfile
 import unittest
 from contextlib import redirect_stdout
@@ -83,15 +84,50 @@ class AgentWorkflowTest(unittest.TestCase):
             file_path = Path(directory) / "notes.md"
             file_path.write_text("Testing validates the main workflow.", encoding="utf-8")
             stream = StringIO()
+            old_key = os.environ.pop("OPENAI_API_KEY", None)
 
-            with redirect_stdout(stream):
-                exit_code = main(["What validates workflow?", "--file", str(file_path), "--json"])
+            try:
+                with redirect_stdout(stream):
+                    exit_code = main(["What validates workflow?", "--file", str(file_path), "--json"])
+            finally:
+                if old_key is not None:
+                    os.environ["OPENAI_API_KEY"] = old_key
 
         output = json.loads(stream.getvalue())
 
         self.assertEqual(exit_code, 0)
         self.assertEqual(output["tools_used"], ["file_reader", "text_search"])
         self.assertIn("Testing validates", output["answer"])
+
+    def test_cli_offline_flag_disables_ai_when_key_exists(self):
+        with tempfile.TemporaryDirectory() as directory:
+            file_path = Path(directory) / "notes.md"
+            file_path.write_text("Testing validates the main workflow.", encoding="utf-8")
+            stream = StringIO()
+            old_key = os.environ.get("OPENAI_API_KEY")
+            os.environ["OPENAI_API_KEY"] = "test-key"
+
+            try:
+                with redirect_stdout(stream):
+                    exit_code = main(
+                        [
+                            "What validates workflow?",
+                            "--file",
+                            str(file_path),
+                            "--json",
+                            "--offline",
+                        ]
+                    )
+            finally:
+                if old_key is None:
+                    os.environ.pop("OPENAI_API_KEY", None)
+                else:
+                    os.environ["OPENAI_API_KEY"] = old_key
+
+        output = json.loads(stream.getvalue())
+
+        self.assertEqual(exit_code, 0)
+        self.assertNotIn("openai_synthesizer", output["tools_used"])
 
 
 if __name__ == "__main__":

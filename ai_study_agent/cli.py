@@ -1,5 +1,6 @@
 import argparse
 import json
+import os
 from typing import Sequence
 
 from ai_study_agent.agent import StudyResearchAgent
@@ -15,7 +16,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("-f", "--file", help="Path to a .txt, .md, .csv, or .json file.")
     parser.add_argument("-c", "--calculate", help="Arithmetic expression to evaluate.")
     parser.add_argument("--summary", action="store_true", help="Summarize the provided file.")
-    parser.add_argument("--ai", action="store_true", help="Use OpenAI API synthesis after local tools run.")
+    parser.add_argument("--offline", action="store_true", help="Disable OpenAI synthesis and use only local tools.")
     parser.add_argument("--json", action="store_true", help="Print machine-readable JSON output.")
     return parser
 
@@ -24,7 +25,8 @@ def main(argv: Sequence[str] | None = None) -> int:
     load_env_file()
     parser = build_parser()
     args = parser.parse_args(argv)
-    agent = StudyResearchAgent(use_ai=args.ai)
+    use_ai = bool(os.getenv("OPENAI_API_KEY")) and not args.offline
+    agent = StudyResearchAgent(use_ai=use_ai)
 
     try:
         if args.summary:
