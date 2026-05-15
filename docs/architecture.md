@@ -14,7 +14,7 @@
 
 `CalculatorTool` safely evaluates arithmetic expressions.
 
-`OpenAISynthesizerTool` optionally calls the OpenAI Responses API after local tools have produced a draft answer and evidence.
+`GeminiSynthesizerTool` optionally calls the Gemini API after local tools have produced a draft answer and evidence.
 
 ## Workflow
 
@@ -23,7 +23,7 @@ User input
   -> CLI parser
   -> StudyResearchAgent
   -> FileReaderTool, TextSearchTool, CalculatorTool
-  -> OpenAISynthesizerTool when OPENAI_API_KEY is configured
+  -> GeminiSynthesizerTool when GEMINI_API_KEY is configured
   -> AgentResponse
   -> Text or JSON output
 ```

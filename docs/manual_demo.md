@@ -1,6 +1,6 @@
 # Manual Demo Scenarios
 
-These scenarios show the main system behavior. Scenarios 1-4 can run offline; Scenario 5 uses the OpenAI API when configured.
+These scenarios show the main system behavior. Scenarios 1-4 can run offline; Scenario 5 uses the Gemini API when configured.
 
 ## Scenario 1: Answer From Markdown Evidence
 
@@ -34,7 +34,7 @@ python main.py "Calculate final score" --calculate "80 + 15 / 3"
 
 Expected behavior: the calculator returns `85.0`.
 
-## Scenario 5: Optional OpenAI API Synthesis
+## Scenario 5: Optional Gemini API Synthesis
 
 Install the optional dependency:
 
@@ -45,8 +45,8 @@ python -m pip install -e ".[ai]"
 Create `.env` in the project root:
 
 ```text
-OPENAI_API_KEY=replace_with_api_key
-OPENAI_MODEL=gpt-5
+GEMINI_API_KEY=replace_with_api_key
+GEMINI_MODEL=gemini-2.0-flash
 ```
 
 Run:
@@ -55,7 +55,7 @@ Run:
 python main.py "Which tool ranks evidence?" --file examples/study_notes.md
 ```
 
-Expected behavior: the local tools read and search the file first, then the OpenAI synthesizer writes a cleaner final answer from the retrieved evidence.
+Expected behavior: the local tools read and search the file first, then the Gemini synthesizer writes a cleaner final answer from the retrieved evidence.
 
 To force the deterministic offline version:
 

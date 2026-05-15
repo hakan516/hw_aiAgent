@@ -1,10 +1,10 @@
 # Study Research Agent
 
-Study Research Agent is a Python command-line assistant that answers questions by combining local tools with optional OpenAI API synthesis. It can read documents, convert structured data into text, search for relevant evidence, safely evaluate arithmetic expressions, and return a grounded answer.
+Study Research Agent is a Python command-line assistant that answers questions by combining local tools with optional Gemini API synthesis. It can read documents, convert structured data into text, search for relevant evidence, safely evaluate arithmetic expressions, and return a grounded answer.
 
 The system runs in two modes:
 
-- API-backed mode: if `OPENAI_API_KEY` is configured, local tools run first and OpenAI synthesizes the final answer from the retrieved evidence.
+- API-backed mode: if `GEMINI_API_KEY` is configured, local tools run first and Gemini synthesizes the final answer from the retrieved evidence.
 - Offline mode: if no API key is configured, or if `--offline` is passed, the system uses only local deterministic tools.
 
 ## Features
@@ -14,7 +14,7 @@ The system runs in two modes:
   - `FileReaderTool` reads `.txt`, `.md`, `.csv`, and `.json` files.
   - `TextSearchTool` ranks document chunks by relevance to the question.
   - `CalculatorTool` evaluates arithmetic expressions through a safe AST parser.
-  - `OpenAISynthesizerTool` uses the OpenAI Responses API when an API key is configured.
+  - `GeminiSynthesizerTool` uses the Gemini API when an API key is configured.
 - CLI input with text or JSON output.
 - Unit tests for tools, validation, errors, API fallback, `.env` loading, and the full workflow.
 - Deployment notes, architecture documentation, manual demo scenarios, and staged project report.
@@ -56,7 +56,7 @@ python -m venv .venv
 python -m pip install -e .
 ```
 
-For OpenAI API synthesis, install the API dependency:
+For Gemini API synthesis, install the API dependency:
 
 ```bash
 python -m pip install -r requirements.txt
@@ -73,13 +73,13 @@ python -m pip install -e ".[ai]"
 Create a local `.env` file in the project root by copying `.env.example`:
 
 ```text
-OPENAI_API_KEY=replace_with_api_key
-OPENAI_MODEL=gpt-5
+GEMINI_API_KEY=replace_with_api_key
+GEMINI_MODEL=gemini-2.0-flash
 ```
 
 The real `.env` file is ignored by Git and should not be committed.
 
-`OPENAI_API_KEY` enables automatic API-backed synthesis. `OPENAI_MODEL` is optional; the default model is `gpt-5`.
+`GEMINI_API_KEY` enables automatic API-backed synthesis. `GEMINI_MODEL` is optional; the default model is `gemini-2.0-flash`.
 
 ## Usage
 
@@ -142,7 +142,7 @@ The system accepts natural-language questions, optional arithmetic expressions, 
 - CSV rows are converted into readable key-value text.
 - Long text is split into numbered chunks while preserving source file information.
 
-The agent passes chunks to the search tool, receives ranked evidence, and prepares a draft answer. If `OPENAI_API_KEY` is configured, the OpenAI synthesizer rewrites the final answer using only the local draft, retrieved evidence, and warnings. Use `--offline` to skip API synthesis.
+The agent passes chunks to the search tool, receives ranked evidence, and prepares a draft answer. If `GEMINI_API_KEY` is configured, the Gemini synthesizer rewrites the final answer using only the local draft, retrieved evidence, and warnings. Use `--offline` to skip API synthesis.
 
 ## Deployment Strategy
 

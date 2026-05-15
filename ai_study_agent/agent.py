@@ -1,5 +1,5 @@
 from ai_study_agent.models import AgentResponse, DocumentChunk
-from ai_study_agent.tools import CalculatorTool, FileReaderTool, OpenAISynthesizerTool, TextSearchTool
+from ai_study_agent.tools import CalculatorTool, FileReaderTool, GeminiSynthesizerTool, TextSearchTool
 
 
 class StudyResearchAgent:
@@ -10,13 +10,13 @@ class StudyResearchAgent:
         file_reader: FileReaderTool | None = None,
         search: TextSearchTool | None = None,
         calculator: CalculatorTool | None = None,
-        synthesizer: OpenAISynthesizerTool | None = None,
+        synthesizer: GeminiSynthesizerTool | None = None,
         use_ai: bool = False,
     ) -> None:
         self.file_reader = file_reader or FileReaderTool()
         self.search = search or TextSearchTool()
         self.calculator = calculator or CalculatorTool()
-        self.synthesizer = synthesizer or OpenAISynthesizerTool()
+        self.synthesizer = synthesizer or GeminiSynthesizerTool()
         self.use_ai = use_ai
 
     def answer(

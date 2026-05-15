@@ -1,4 +1,4 @@
-import json
+﻿import json
 import os
 import tempfile
 import unittest
@@ -84,7 +84,7 @@ class AgentWorkflowTest(unittest.TestCase):
             file_path = Path(directory) / "notes.md"
             file_path.write_text("Testing validates the main workflow.", encoding="utf-8")
             stream = StringIO()
-            old_key = os.environ.pop("OPENAI_API_KEY", None)
+            old_key = os.environ.pop("GEMINI_API_KEY", None)
 
             try:
                 with redirect_stdout(stream):
@@ -93,7 +93,7 @@ class AgentWorkflowTest(unittest.TestCase):
                     )
             finally:
                 if old_key is not None:
-                    os.environ["OPENAI_API_KEY"] = old_key
+                    os.environ["GEMINI_API_KEY"] = old_key
 
         output = json.loads(stream.getvalue())
 
@@ -106,8 +106,8 @@ class AgentWorkflowTest(unittest.TestCase):
             file_path = Path(directory) / "notes.md"
             file_path.write_text("Testing validates the main workflow.", encoding="utf-8")
             stream = StringIO()
-            old_key = os.environ.get("OPENAI_API_KEY")
-            os.environ["OPENAI_API_KEY"] = "test-key"
+            old_key = os.environ.get("GEMINI_API_KEY")
+            os.environ["GEMINI_API_KEY"] = "test-key"
 
             try:
                 with redirect_stdout(stream):
@@ -122,15 +122,16 @@ class AgentWorkflowTest(unittest.TestCase):
                     )
             finally:
                 if old_key is None:
-                    os.environ.pop("OPENAI_API_KEY", None)
+                    os.environ.pop("GEMINI_API_KEY", None)
                 else:
-                    os.environ["OPENAI_API_KEY"] = old_key
+                    os.environ["GEMINI_API_KEY"] = old_key
 
         output = json.loads(stream.getvalue())
 
         self.assertEqual(exit_code, 0)
-        self.assertNotIn("openai_synthesizer", output["tools_used"])
+        self.assertNotIn("gemini_synthesizer", output["tools_used"])
 
 
 if __name__ == "__main__":
     unittest.main()
+

@@ -9,7 +9,7 @@ The first deployment target is a local command-line tool. This keeps file proces
 - Python 3.10 or newer.
 - Git for cloning and version control.
 - No required runtime packages for offline mode.
-- Optional AI mode package: `openai`.
+- Optional AI mode package: `google-genai`.
 - Optional: `pytest` if the developer prefers pytest over the standard `unittest` runner.
 
 ## Setup
@@ -22,7 +22,7 @@ python -m venv .venv
 python -m pip install -e .
 ```
 
-For OpenAI API synthesis:
+For Gemini API synthesis:
 
 ```bash
 python -m pip install -e ".[ai]"
@@ -48,17 +48,17 @@ No environment variables are required for offline mode. The system is intentiona
 
 Optional AI configuration:
 
-- `OPENAI_API_KEY`: enables OpenAI API synthesis when present.
-- `OPENAI_MODEL`: optional model override. Default: `gpt-5`.
+- `GEMINI_API_KEY`: enables Gemini API synthesis when present.
+- `GEMINI_MODEL`: optional model override. Default: `gemini-2.0-flash`.
 
 These values can be placed in a local `.env` file:
 
 ```text
-OPENAI_API_KEY=replace_with_api_key
-OPENAI_MODEL=gpt-5
+GEMINI_API_KEY=replace_with_api_key
+GEMINI_MODEL=gemini-2.0-flash
 ```
 
-When `OPENAI_API_KEY` exists, API synthesis is used automatically. Add `--offline` to any command to force local-only behavior.
+When `GEMINI_API_KEY` exists, API synthesis is used automatically. Add `--offline` to any command to force local-only behavior.
 
 ## Verification Before Release
 

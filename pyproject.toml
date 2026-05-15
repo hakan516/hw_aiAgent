@@ -14,7 +14,7 @@ authors = [{ name = "Study Research Agent Team" }]
 study-agent = "ai_study_agent.cli:main"
 
 [project.optional-dependencies]
-ai = ["openai>=1.0"]
+ai = ["google-genai>=1.0"]
 dev = ["pytest>=8.0,<9.0"]
 
 [tool.setuptools.packages.find]
