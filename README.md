@@ -32,6 +32,7 @@ The project is designed for a controlled deployment scenario: it runs locally by
 │   └── report.md
 ├── examples/
 ├── tests/
+├── .env.example
 ├── main.py
 ├── pyproject.toml
 ├── requirements.txt
@@ -91,15 +92,17 @@ python main.py "What validates workflow?" --file notes.md --json
 Use real OpenAI API synthesis:
 
 ```bash
-$env:OPENAI_API_KEY="your_api_key_here"
 python main.py "Which tool ranks evidence?" --file examples/study_notes.md --ai
 ```
 
-Optional model override:
+Create a local `.env` file first:
 
-```bash
-$env:OPENAI_MODEL="gpt-5"
+```text
+OPENAI_API_KEY=your_api_key_here
+OPENAI_MODEL=gpt-5
 ```
+
+`.env` is ignored by Git. Use `.env.example` as the template.
 
 After editable installation, the console command is also available:
 

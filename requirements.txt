@@ -1,4 +1,3 @@
 openai>=1.0
 
 # Offline mode can run without installing this file.
-# Optional for development: pytest>=8.0,<9.0

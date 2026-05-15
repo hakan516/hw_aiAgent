@@ -3,6 +3,7 @@ import json
 from typing import Sequence
 
 from ai_study_agent.agent import StudyResearchAgent
+from ai_study_agent.config import load_env_file
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -20,6 +21,7 @@ def build_parser() -> argparse.ArgumentParser:
 
 
 def main(argv: Sequence[str] | None = None) -> int:
+    load_env_file()
     parser = build_parser()
     args = parser.parse_args(argv)
     agent = StudyResearchAgent(use_ai=args.ai)

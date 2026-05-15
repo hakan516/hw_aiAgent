@@ -87,6 +87,7 @@ The project includes:
 
 - `README.md` with installation, usage, testing, and deployment instructions.
 - `requirements.txt` showing that offline mode has no runtime dependencies and AI mode has an optional OpenAI dependency.
+- `.env.example` showing the API configuration format without exposing secrets.
 - `pyproject.toml` for editable installation, optional dependencies, and a `study-agent` console command.
 - `docs/deployment.md` with setup, launch, configuration, verification, and release notes.
 
@@ -153,7 +154,7 @@ Test scenarios:
 - Optional AI synthesis works after local tools.
 - Missing API configuration is handled as a warning.
 
-Deployment preparation: the system can be run with `python main.py` or installed as `study-agent` through `pyproject.toml`. AI mode additionally requires the optional `openai` package and `OPENAI_API_KEY`.
+Deployment preparation: the system can be run with `python main.py` or installed as `study-agent` through `pyproject.toml`. AI mode additionally requires the optional `openai` package and `OPENAI_API_KEY`, which can be stored in a local `.env` file.
 
 Data conversion: file inputs are normalized into `DocumentChunk` records. JSON is parsed and formatted consistently; CSV rows become key-value text; plain text and Markdown are cleaned and chunked.
 
@@ -167,6 +168,6 @@ Final tools: file reader, text search, calculator, and optional OpenAI synthesiz
 
 Final testing conclusion: all tests pass in the local test environment.
 
-Final deployment preparation: README, dependency file, package metadata, console command, deployment notes, optional AI configuration, and test instructions are included.
+Final deployment preparation: README, dependency file, package metadata, console command, `.env.example`, deployment notes, optional AI configuration, and test instructions are included.
 
 Final deployment strategy: local CLI first, optional API mode for users with an OpenAI key, then staged GitHub releases after test verification.

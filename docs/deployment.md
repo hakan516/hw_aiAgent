@@ -26,8 +26,9 @@ For OpenAI API synthesis:
 
 ```bash
 python -m pip install -e ".[ai]"
-$env:OPENAI_API_KEY="your_api_key_here"
 ```
+
+Create `.env` from `.env.example` and add your own key. The real `.env` file is ignored by Git.
 
 ## Launch
 
@@ -49,6 +50,13 @@ Optional AI configuration:
 
 - `OPENAI_API_KEY`: required only when using `--ai`.
 - `OPENAI_MODEL`: optional model override. Default: `gpt-5`.
+
+These values can be placed in a local `.env` file:
+
+```text
+OPENAI_API_KEY=your_api_key_here
+OPENAI_MODEL=gpt-5
+```
 
 ## Verification Before Release
 

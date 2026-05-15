@@ -36,11 +36,17 @@ Expected behavior: the calculator returns `85.0`.
 
 ## Scenario 5: Optional OpenAI API Synthesis
 
-Install the optional dependency and set an API key:
+Install the optional dependency:
 
 ```bash
 python -m pip install -e ".[ai]"
-$env:OPENAI_API_KEY="your_api_key_here"
+```
+
+Create `.env` in the project root:
+
+```text
+OPENAI_API_KEY=your_api_key_here
+OPENAI_MODEL=gpt-5
 ```
 
 Run:
