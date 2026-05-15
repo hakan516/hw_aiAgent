@@ -2,7 +2,7 @@
 
 ## Target Mode
 
-The first deployment target is a local command-line tool. This keeps user files on the user's computer and avoids external service failures during assessment.
+The first deployment target is a local command-line tool. This keeps file processing local and avoids external service failures during normal offline use.
 
 ## Requirements
 
@@ -28,7 +28,7 @@ For OpenAI API synthesis:
 python -m pip install -e ".[ai]"
 ```
 
-Create `.env` from `.env.example` and add your own key. The real `.env` file is ignored by Git.
+Create `.env` from `.env.example` and add the API key. The real `.env` file is ignored by Git.
 
 ## Launch
 
@@ -54,7 +54,7 @@ Optional AI configuration:
 These values can be placed in a local `.env` file:
 
 ```text
-OPENAI_API_KEY=your_api_key_here
+OPENAI_API_KEY=replace_with_api_key
 OPENAI_MODEL=gpt-5
 ```
 
@@ -78,4 +78,4 @@ Use a staged release:
 4. Share installation instructions with a small group of users.
 5. Collect feedback before adding web/API deployment.
 
-The project could later become a web service, but the local CLI is safer for the first release because the system reads local files.
+The project can later be deployed as a web service or API-based assistant. The local CLI is the safest first release because file processing remains under user control.

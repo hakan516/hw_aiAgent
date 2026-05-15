@@ -8,7 +8,7 @@ version = "0.1.0"
 description = "A local AI-assisted study agent that uses tools to read files, search evidence, and calculate safely."
 requires-python = ">=3.10"
 readme = "README.md"
-authors = [{ name = "Student Project" }]
+authors = [{ name = "Study Research Agent Team" }]
 
 [project.scripts]
 study-agent = "ai_study_agent.cli:main"

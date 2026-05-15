@@ -10,7 +10,7 @@ class OpenAISynthesizerTool:
 
     def __init__(self, model: str | None = None, api_key: str | None = None) -> None:
         self.model = model or os.getenv("OPENAI_MODEL", "gpt-5")
-        self.api_key = api_key or os.getenv("OPENAI_API_KEY")
+        self.api_key = api_key if api_key is not None else os.getenv("OPENAI_API_KEY")
 
     def run(
         self,

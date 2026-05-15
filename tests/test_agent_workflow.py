@@ -88,7 +88,9 @@ class AgentWorkflowTest(unittest.TestCase):
 
             try:
                 with redirect_stdout(stream):
-                    exit_code = main(["What validates workflow?", "--file", str(file_path), "--json"])
+                    exit_code = main(
+                        ["What validates workflow?", "--file", str(file_path), "--json", "--offline"]
+                    )
             finally:
                 if old_key is not None:
                     os.environ["OPENAI_API_KEY"] = old_key

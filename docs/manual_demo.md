@@ -1,6 +1,6 @@
 # Manual Demo Scenarios
 
-These scenarios show the system behavior without needing external services.
+These scenarios show the main system behavior. Scenarios 1-4 can run offline; Scenario 5 uses the OpenAI API when configured.
 
 ## Scenario 1: Answer From Markdown Evidence
 
@@ -45,7 +45,7 @@ python -m pip install -e ".[ai]"
 Create `.env` in the project root:
 
 ```text
-OPENAI_API_KEY=your_api_key_here
+OPENAI_API_KEY=replace_with_api_key
 OPENAI_MODEL=gpt-5
 ```
 

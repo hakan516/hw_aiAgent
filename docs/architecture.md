@@ -14,6 +14,8 @@
 
 `CalculatorTool` safely evaluates arithmetic expressions.
 
+`OpenAISynthesizerTool` optionally calls the OpenAI Responses API after local tools have produced a draft answer and evidence.
+
 ## Workflow
 
 ```text
@@ -21,6 +23,7 @@ User input
   -> CLI parser
   -> StudyResearchAgent
   -> FileReaderTool, TextSearchTool, CalculatorTool
+  -> OpenAISynthesizerTool when OPENAI_API_KEY is configured
   -> AgentResponse
   -> Text or JSON output
 ```
